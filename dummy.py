@@ -1,7 +1,8 @@
-import torch
 from kan import *
 from kan.utils import ex_round
-import pandas as pd
+import matplotlib
+#matplotlib.use('TkAgg')
+from sklearn.model_selection import train_test_split
 
 torch.set_default_dtype(torch.float64)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -11,15 +12,25 @@ print(device)
 model = KAN(width=[2,5,1], grid=3, k=3, seed=42, device=device)
 
 df = pd.read_csv("data.csv").to_numpy()
-train_input = torch.tensor(df[:,0:2], dtype=torch.float64)
-train_label = torch.tensor(df[:,2], dtype=torch.float64)
+df_train, df_test = train_test_split(df, train_size=0.9)
+
+train_input = torch.tensor(df_train[:,0:2], dtype=torch.float64)
+train_label = torch.tensor(df_train[:,2:], dtype=torch.float64)
+test_input = torch.tensor(df_test[:,0:2], dtype=torch.float64)
+test_label = torch.tensor(df_test[:,2:], dtype=torch.float64)
 
 dataset = {
     "train_input" : train_input,
     "train_label" : train_label,
-    "test_input": train_input,
-    "test_label": train_label
+    "test_input": test_input,
+    "test_label": test_label
 }
+
+#dataset = create_dataset(f, n_var=2, device=device)
+
+print(dataset['train_input'].shape, dataset['train_label'].shape)
+
+
 
 model(dataset['train_input'])
 model.plot()

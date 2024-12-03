@@ -1,5 +1,7 @@
 from kan import *
 from kan.utils import ex_round
+import matplotlib
+matplotlib.use('TkAgg')
 
 torch.set_default_dtype(torch.float64)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -12,6 +14,8 @@ f = lambda x: torch.exp(torch.sin(torch.pi*x[:,[0]]) + x[:,[1]]**2)
 
 dataset = create_dataset(f, n_var=2, device=device)
 print(dataset['train_input'].shape, dataset['train_label'].shape)
+
+
 
 model(dataset['train_input'])
 model.plot()
