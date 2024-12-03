@@ -48,7 +48,7 @@ def test_acc():
 
 image_folder = 'video_img'
 results = model.fit(iris_dataset, opt="Adam", metrics=(train_acc, test_acc),
-                    loss_fn=torch.nn.CrossEntropyLoss(), steps=100, lamb=0.01, lamb_entropy=10., save_fig=True,
+                    loss_fn=torch.nn.CrossEntropyLoss(), steps=1, lamb=0.01, lamb_entropy=10., save_fig=True,
                     img_folder=image_folder)
 
 print(results['train_acc'][-1], results['test_acc'][-1])
