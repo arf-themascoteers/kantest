@@ -16,9 +16,9 @@ print(device)
 def load_iris_dataset():
   df = pd.read_csv("indian_pines.csv").to_numpy()
   df_train, df_test = train_test_split(df, train_size=0.9)
-  train_input = torch.tensor(df_train[:, :-1], dtype=torch.float64).to(device)
+  train_input = torch.tensor(df_train[:, :-1], dtype=torch.float32).to(device)
   train_label = torch.tensor(df_train[:, -1], dtype=torch.long).to(device)
-  test_input = torch.tensor(df_test[:, :-1], dtype=torch.float64).to(device)
+  test_input = torch.tensor(df_test[:, :-1], dtype=torch.float32).to(device)
   test_label = torch.tensor(df_test[:, -1], dtype=torch.long).to(device)
 
   dataset = {
@@ -36,7 +36,7 @@ iris_dataset = load_iris_dataset()
 model = KAN(width=[200, 5, 16], grid=5, k=3, seed=0, device=device)
 
 model(iris_dataset['train_input'])
-model.plot(beta=100, scale=1, in_vars=['SL', 'SW', 'PL', 'PW'], out_vars=['Set', 'Ver', 'Vir'])
+#model.plot()
 
 
 def train_acc():
