@@ -27,4 +27,4 @@ model = model.refine(10)
 model.fit(dataset, opt="LBFGS", steps=50)
 
 
-ex_round(model.symbolic_formula()[0][0],4)
+print(ex_round(model.symbolic_formula()[0][0],4))
